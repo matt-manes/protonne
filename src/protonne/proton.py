@@ -152,6 +152,9 @@ class Proton(Morbin):
     def reconnect(self) -> Output:
         return self.proton("reconnect")
 
+    def config(self, args: str = "") -> Output:
+        return self.proton(f"config {args}")
+
     # Seat |=========================== Convenience ===========================|
 
     @property
