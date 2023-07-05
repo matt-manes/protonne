@@ -1,5 +1,7 @@
-from morbin import Morbin, Output
 from dataclasses import dataclass
+from pathlib import Path
+
+from morbin import Morbin, Output
 
 
 @dataclass
@@ -195,3 +197,10 @@ class Proton(Morbin):
     def connect_random(self) -> Output:
         """Connect to a random server."""
         return self.connect(random=True)
+
+    def clear_cache(self):
+        """Clears files from `home/.cache/protonvpn`.
+
+        This seems to help with the time taken to connect sometimes,
+        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error."""
+        [path.unlink() for path in (Path.home() / ".cache" / "protonvpn").glob("*.*")]
