@@ -20,8 +20,10 @@ class Connection:
     server: Server
     kill_switch: str
     time: str
+    raw: str
 
     def __init__(self, status: str):
+        self.raw = status
         lines = [line for line in status.splitlines() if ":" in line]
         connection = {
             line.split(":", 1)[0]: line.split(":", 1)[1].replace("\t", "").strip()
@@ -38,6 +40,9 @@ class Connection:
         )
         self.kill_switch = connection["Kill switch"]
         self.time = connection["Connection time"]
+
+    def __str__(self) -> str:
+        return self.raw
 
 
 class Proton(Morbin):
@@ -65,8 +70,15 @@ class Proton(Morbin):
     @property
     def connection(self) -> Connection | None:
         """If this device is connected, a `Connection` object will be returned.
-        If disconnected, `None` will be returned."""
+        If disconnected, `None` will be returned.
+
+        """
         with self.capturing_output():
             if self.connected:
                 return Connection(self.status().stdout)
             return None
+
+
+if __name__ == "__main__":
+    p = Proton()
+    print(p.connection)
