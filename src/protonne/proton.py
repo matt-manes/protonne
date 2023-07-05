@@ -72,6 +72,8 @@ class Proton(Morbin):
         """If this device is connected, a `Connection` object will be returned.
         If disconnected, `None` will be returned.
 
+        Accessing this property can be time consuming due to the protonvpn-cli backend.
+        Ideally store it in a local variable until you need to check for an updated connection status.
         """
         with self.capturing_output():
             if self.connected:
