@@ -189,6 +189,14 @@ class Proton(Morbin):
     def enable_permanent_killswitch(self) -> Output:
         return self.killswitch("permanent")
 
+    def connect_fastest(self) -> Output:
+        """Connect to the fastest server."""
+        return self.connect(fastest=True)
+
+    def connect_random(self) -> Output:
+        """Connect to a random server."""
+        return self.connect(random=True)
+
 
 if __name__ == "__main__":
     p = Proton()
