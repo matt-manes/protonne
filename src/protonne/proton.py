@@ -155,6 +155,9 @@ class Proton(Morbin):
     def config(self, args: str = "") -> Output:
         return self.proton(f"config {args}")
 
+    def netshield(self, args: str = "") -> Output:
+        return self.proton(f"netshield {args}")
+
     # Seat |=========================== Convenience ===========================|
 
     @property
