@@ -15,10 +15,35 @@ class Server:
 
 
 @dataclass(init=False)
+class KillSwitch:
+    on: bool
+    active: bool
+    permanent: bool
+
+    def __init__(self, status: str):
+        if status == "Off":
+            self.on = False
+            self.active = False
+            self.permenent = False
+        elif status.startswith("On (Inactive,"):
+            self.on = True
+            self.active = False
+            self.permanent = False
+        elif status == "On":
+            self.on = True
+            self.active = True
+            self.permanent = False
+        elif status == "Permanent":
+            self.on = True
+            self.active = True
+            self.permanent = True
+
+
+@dataclass(init=False)
 class Connection:
     IP: str
     server: Server
-    kill_switch: str
+    killswitch: KillSwitch
     time: str
     raw: str
 
@@ -38,7 +63,7 @@ class Connection:
             connection["Server Plan"],
             connection["Server Features"],
         )
-        self.kill_switch = connection["Kill switch"]
+        self.killswitch = KillSwitch(connection["Kill switch"])
         self.time = connection["Connection time"]
 
     def __str__(self) -> str:
@@ -84,3 +109,5 @@ class Proton(Morbin):
 if __name__ == "__main__":
     p = Proton()
     print(p.connection)
+    print(p.connection.server)
+    print(p.connection.killswitch)
