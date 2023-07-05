@@ -1,6 +1,5 @@
 from morbin import Morbin, Output
 from dataclasses import dataclass
-from pathier import Pathier
 
 
 @dataclass
@@ -196,7 +195,3 @@ class Proton(Morbin):
     def connect_random(self) -> Output:
         """Connect to a random server."""
         return self.connect(random=True)
-
-
-if __name__ == "__main__":
-    p = Proton()
