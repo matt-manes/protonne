@@ -16,8 +16,8 @@ class Server:
 
 @dataclass(init=False)
 class KillSwitch:
-    on: bool
     active: bool
+    on: bool
     permanent: bool
 
     def __init__(self, status: str):
@@ -42,10 +42,10 @@ class KillSwitch:
 @dataclass(init=False)
 class Connection:
     IP: str
-    server: Server
     killswitch: KillSwitch
-    time: str
     raw: str
+    server: Server
+    time: str
 
     def __init__(self, status: str):
         self.raw = status
@@ -79,19 +79,8 @@ class Proton(Morbin):
 
     # Seat |=============================== Core ===============================|
 
-    def status(self) -> Output:
-        """Execute status command."""
-        return self.proton("status")
-
-    def killswitch(self, arg: str) -> Output:
-        """`arg` should be one of `on`, `off`, or `permanent`."""
-        return self.proton(f"killswitch --{arg}")
-
-    def login(self, username: str) -> Output:
-        return self.proton(f"login {username}")
-
-    def logout(self) -> Output:
-        return self.proton("logout")
+    def config(self, args: str = "") -> Output:
+        return self.proton(f"config {args}")
 
     def connect(
         self,
@@ -141,7 +130,7 @@ class Proton(Morbin):
             args = "--p2p"
         elif tor:
             args = "--tor"
-        if country_code and not server:
+        if country_code and (not server):
             args += f" --cc {country_code}"
         if protocol:
             args += f" --protocol {protocol}"
@@ -150,14 +139,25 @@ class Proton(Morbin):
     def disconnect(self) -> Output:
         return self.proton("disconnect")
 
-    def reconnect(self) -> Output:
-        return self.proton("reconnect")
+    def killswitch(self, arg: str) -> Output:
+        """`arg` should be one of `on`, `off`, or `permanent`."""
+        return self.proton(f"killswitch --{arg}")
 
-    def config(self, args: str = "") -> Output:
-        return self.proton(f"config {args}")
+    def login(self, username: str) -> Output:
+        return self.proton(f"login {username}")
+
+    def logout(self) -> Output:
+        return self.proton("logout")
 
     def netshield(self, args: str = "") -> Output:
         return self.proton(f"netshield {args}")
+
+    def reconnect(self) -> Output:
+        return self.proton("reconnect")
+
+    def status(self) -> Output:
+        """Execute status command."""
+        return self.proton("status")
 
     # Seat |=========================== Convenience ===========================|
 
@@ -181,14 +181,12 @@ class Proton(Morbin):
                 return Connection(self.status().stdout)
             return None
 
-    def enable_killswitch(self) -> Output:
-        return self.killswitch("on")
+    def clear_cache(self):
+        """Clears files from `home/.cache/protonvpn`.
 
-    def disable_killswitch(self) -> Output:
-        return self.killswitch("off")
-
-    def enable_permanent_killswitch(self) -> Output:
-        return self.killswitch("permanent")
+        This seems to help with the time taken to connect sometimes,
+        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error."""
+        [path.unlink() for path in (Path.home() / ".cache" / "protonvpn").glob("*.*")]
 
     def connect_fastest(self) -> Output:
         """Connect to the fastest server."""
@@ -198,9 +196,11 @@ class Proton(Morbin):
         """Connect to a random server."""
         return self.connect(random=True)
 
-    def clear_cache(self):
-        """Clears files from `home/.cache/protonvpn`.
+    def disable_killswitch(self) -> Output:
+        return self.killswitch("off")
 
-        This seems to help with the time taken to connect sometimes,
-        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error."""
-        [path.unlink() for path in (Path.home() / ".cache" / "protonvpn").glob("*.*")]
+    def enable_killswitch(self) -> Output:
+        return self.killswitch("on")
+
+    def enable_permanent_killswitch(self) -> Output:
+        return self.killswitch("permanent")
