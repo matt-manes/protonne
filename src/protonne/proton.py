@@ -186,7 +186,9 @@ class Proton(Morbin):
 
         This seems to help with the time taken to connect sometimes,
         but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error."""
-        [path.unlink() for path in (Path.home() / ".cache" / "protonvpn").glob("*.*")]
+        path = Path.home() / ".cache" / "protonvpn"
+        if path.exists():
+            [path.unlink() for path in path.glob("*.*")]
 
     def connect_fastest(self) -> Output:
         """Connect to the fastest server."""
