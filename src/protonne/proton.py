@@ -11,7 +11,7 @@ class Server:
     protocol: str
     load: str
     plan: str
-    features: str
+    features: str | None
 
 
 @dataclass(init=False)
@@ -24,7 +24,7 @@ class KillSwitch:
         if status == "Off":
             self.on = False
             self.active = False
-            self.permenent = False
+            self.permanent = False
         elif status.startswith("On (Inactive,"):
             self.on = True
             self.active = False
@@ -61,7 +61,7 @@ class Connection:
             connection["Protocol"],
             connection["Server Load"],
             connection["Server Plan"],
-            connection["Server Features"],
+            connection.get("Server Features"),
         )
         self.killswitch = KillSwitch(connection["Kill switch"])
         self.time = connection["Connection time"]
@@ -185,7 +185,8 @@ class Proton(Morbin):
         """Clears files from `home/.cache/protonvpn`.
 
         This seems to help with the time taken to connect sometimes,
-        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error."""
+        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error.
+        """
         path = Path.home() / ".cache" / "protonvpn"
         if path.exists():
             [path.unlink() for path in path.glob("*.*")]
