@@ -43,7 +43,7 @@ def test_killswitch():
     assert ks.on and ks.active and not ks.permanent
     proton.enable_permanent_killswitch()
     ks = proton.connection.killswitch  # type: ignore
-    assert ks.on and ks.active and ks.permenent
+    assert ks.on and ks.active and ks.permanent
     proton.disable_killswitch()
     ks = proton.connection.killswitch  # type: ignore
     assert not ks.on and not ks.active and not ks.permanent
