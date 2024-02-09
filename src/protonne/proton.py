@@ -71,16 +71,14 @@ class Connection:
 
 
 class Proton(Morbin):
-    def proton(self, args: str = "") -> Output:
-        """Base function for executing `protonvpn-cli` commands.
-
-        Higher level commands should be built on this function and return its output."""
-        return self.execute("protonvpn-cli", args)
+    @property
+    def program(self) -> str:
+        return "protonvpn-cli"
 
     # Seat |=============================== Core ===============================|
 
     def config(self, args: str = "") -> Output:
-        return self.proton(f"config {args}")
+        return self.run(f"config {args}")
 
     def connect(
         self,
@@ -134,30 +132,30 @@ class Proton(Morbin):
             args += f" --cc {country_code}"
         if protocol:
             args += f" --protocol {protocol}"
-        return self.proton(f"connect {args}")
+        return self.run(f"connect {args}")
 
     def disconnect(self) -> Output:
-        return self.proton("disconnect")
+        return self.run("disconnect")
 
     def killswitch(self, arg: str) -> Output:
         """`arg` should be one of `on`, `off`, or `permanent`."""
-        return self.proton(f"killswitch --{arg}")
+        return self.run(f"killswitch --{arg}")
 
     def login(self, username: str) -> Output:
-        return self.proton(f"login {username}")
+        return self.run(f"login {username}")
 
     def logout(self) -> Output:
-        return self.proton("logout")
+        return self.run("logout")
 
     def netshield(self, args: str = "") -> Output:
-        return self.proton(f"netshield {args}")
+        return self.run(f"netshield {args}")
 
     def reconnect(self) -> Output:
-        return self.proton("reconnect")
+        return self.run("reconnect")
 
     def status(self) -> Output:
         """Execute status command."""
-        return self.proton("status")
+        return self.run("status")
 
     # Seat |=========================== Convenience ===========================|
 
