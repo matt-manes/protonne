@@ -41,7 +41,7 @@ class KillSwitch:
 
 @dataclass(init=False)
 class Connection:
-    IP: str
+    ip: str
     killswitch: KillSwitch
     raw: str
     server: Server
@@ -54,7 +54,7 @@ class Connection:
             line.split(":", 1)[0]: line.split(":", 1)[1].replace("\t", "").strip()
             for line in lines
         }
-        self.IP = connection["IP"]
+        self.ip = connection["IP"]
         self.server = Server(
             connection["Server"],
             connection["Country"],
