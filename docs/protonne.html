@@ -18,17 +18,71 @@
         <input id="togglestate" type="checkbox" aria-hidden="true" tabindex="-1">
         <div>
 
-            <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
-                   pattern=".+" required>
 
 
-        <h2>Submodules</h2>
-        <ul>
-                <li><a href="protonne/proton.html">proton</a></li>
-        </ul>
 
         <h2>API Documentation</h2>
             <ul class="memberlist">
+            <li>
+                    <a class="class" href="#Proton">Proton</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#Proton.program">program</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.config">config</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.connect">connect</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.disconnect">disconnect</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.killswitch">killswitch</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.login">login</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.logout">logout</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.netshield">netshield</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.reconnect">reconnect</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.status">status</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Proton.connected">connected</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Proton.connection">connection</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.clear_cache">clear_cache</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.connect_fastest">connect_fastest</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.connect_random">connect_random</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.disable_killswitch">disable_killswitch</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.enable_killswitch">enable_killswitch</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#Proton.enable_permanent_killswitch">enable_permanent_killswitch</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -52,192 +106,629 @@ protonne    </h1>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="kn">from</span> <span class="nn">.proton</span> <span class="kn">import</span> <span class="n">Proton</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.0.1&quot;</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Proton&quot;</span><span class="p">]</span>
 </span></pre></div>
 
 
             </section>
+                <section id="Proton">
+                            <input id="Proton-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">Proton</span><wbr>(<span class="base">morbin.morbin.Morbin</span>):
+
+                <label class="view-source-button" for="Proton-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton-74"><a href="#Proton-74"><span class="linenos"> 74</span></a><span class="k">class</span> <span class="nc">Proton</span><span class="p">(</span><span class="n">Morbin</span><span class="p">):</span>
+</span><span id="Proton-75"><a href="#Proton-75"><span class="linenos"> 75</span></a>    <span class="nd">@property</span>
+</span><span id="Proton-76"><a href="#Proton-76"><span class="linenos"> 76</span></a>    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="Proton-77"><a href="#Proton-77"><span class="linenos"> 77</span></a>        <span class="k">return</span> <span class="s2">&quot;protonvpn-cli&quot;</span>
+</span><span id="Proton-78"><a href="#Proton-78"><span class="linenos"> 78</span></a>
+</span><span id="Proton-79"><a href="#Proton-79"><span class="linenos"> 79</span></a>    <span class="c1"># Seat |=============================== Core ===============================|</span>
+</span><span id="Proton-80"><a href="#Proton-80"><span class="linenos"> 80</span></a>
+</span><span id="Proton-81"><a href="#Proton-81"><span class="linenos"> 81</span></a>    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-82"><a href="#Proton-82"><span class="linenos"> 82</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;config </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Proton-83"><a href="#Proton-83"><span class="linenos"> 83</span></a>
+</span><span id="Proton-84"><a href="#Proton-84"><span class="linenos"> 84</span></a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span>
+</span><span id="Proton-85"><a href="#Proton-85"><span class="linenos"> 85</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="Proton-86"><a href="#Proton-86"><span class="linenos"> 86</span></a>        <span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton-87"><a href="#Proton-87"><span class="linenos"> 87</span></a>        <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton-88"><a href="#Proton-88"><span class="linenos"> 88</span></a>        <span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton-89"><a href="#Proton-89"><span class="linenos"> 89</span></a>        <span class="n">fastest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton-90"><a href="#Proton-90"><span class="linenos"> 90</span></a>        <span class="n">random</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton-91"><a href="#Proton-91"><span class="linenos"> 91</span></a>        <span class="n">secure_core</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton-92"><a href="#Proton-92"><span class="linenos"> 92</span></a>        <span class="n">p2p</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton-93"><a href="#Proton-93"><span class="linenos"> 93</span></a>        <span class="n">tor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton-94"><a href="#Proton-94"><span class="linenos"> 94</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-95"><a href="#Proton-95"><span class="linenos"> 95</span></a>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Proton-96"><a href="#Proton-96"><span class="linenos"> 96</span></a><span class="sd">        #### :params:</span>
+</span><span id="Proton-97"><a href="#Proton-97"><span class="linenos"> 97</span></a>
+</span><span id="Proton-98"><a href="#Proton-98"><span class="linenos"> 98</span></a><span class="sd">        `server`: Connect to this specific server (e.g. `CH#4`, `CH-US-1`, `HK5-Tor`).</span>
+</span><span id="Proton-99"><a href="#Proton-99"><span class="linenos"> 99</span></a>
+</span><span id="Proton-100"><a href="#Proton-100"><span class="linenos">100</span></a><span class="sd">        `protocol`: Connect using this protocol (`tcp` or `udp`).</span>
+</span><span id="Proton-101"><a href="#Proton-101"><span class="linenos">101</span></a>
+</span><span id="Proton-102"><a href="#Proton-102"><span class="linenos">102</span></a><span class="sd">        `country_code`: Connect to a server in this country (`SE`, `PT`, `BR`, `AR`, etc.).</span>
+</span><span id="Proton-103"><a href="#Proton-103"><span class="linenos">103</span></a>
+</span><span id="Proton-104"><a href="#Proton-104"><span class="linenos">104</span></a><span class="sd">        `fastest`: Connect to the fastest server.</span>
+</span><span id="Proton-105"><a href="#Proton-105"><span class="linenos">105</span></a>
+</span><span id="Proton-106"><a href="#Proton-106"><span class="linenos">106</span></a><span class="sd">        `random`: Connect to a random server.</span>
+</span><span id="Proton-107"><a href="#Proton-107"><span class="linenos">107</span></a>
+</span><span id="Proton-108"><a href="#Proton-108"><span class="linenos">108</span></a><span class="sd">        `secure_core`: Connect to the fastest Secure-Core server.</span>
+</span><span id="Proton-109"><a href="#Proton-109"><span class="linenos">109</span></a>
+</span><span id="Proton-110"><a href="#Proton-110"><span class="linenos">110</span></a><span class="sd">        `p2p`: Connect to the fastest P2P server.</span>
+</span><span id="Proton-111"><a href="#Proton-111"><span class="linenos">111</span></a>
+</span><span id="Proton-112"><a href="#Proton-112"><span class="linenos">112</span></a><span class="sd">        `tor`: Connect to the fastest Tor server.</span>
+</span><span id="Proton-113"><a href="#Proton-113"><span class="linenos">113</span></a>
+</span><span id="Proton-114"><a href="#Proton-114"><span class="linenos">114</span></a><span class="sd">        Supplying an argument for `server` will override other parameters except `protocol`.</span>
+</span><span id="Proton-115"><a href="#Proton-115"><span class="linenos">115</span></a>
+</span><span id="Proton-116"><a href="#Proton-116"><span class="linenos">116</span></a><span class="sd">        If supplying one of the `bool` params (`fastest`, `random`, `secure_core`, `p2p`, `tor`), supply only one.</span>
+</span><span id="Proton-117"><a href="#Proton-117"><span class="linenos">117</span></a><span class="sd">        They will be checked in the order they appear in the function signature and the first that is `True` will be used.</span>
+</span><span id="Proton-118"><a href="#Proton-118"><span class="linenos">118</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Proton-119"><a href="#Proton-119"><span class="linenos">119</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="Proton-120"><a href="#Proton-120"><span class="linenos">120</span></a>        <span class="k">if</span> <span class="n">server</span><span class="p">:</span>
+</span><span id="Proton-121"><a href="#Proton-121"><span class="linenos">121</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="n">server</span>
+</span><span id="Proton-122"><a href="#Proton-122"><span class="linenos">122</span></a>        <span class="k">elif</span> <span class="n">fastest</span><span class="p">:</span>
+</span><span id="Proton-123"><a href="#Proton-123"><span class="linenos">123</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--fastest&quot;</span>
+</span><span id="Proton-124"><a href="#Proton-124"><span class="linenos">124</span></a>        <span class="k">elif</span> <span class="n">random</span><span class="p">:</span>
+</span><span id="Proton-125"><a href="#Proton-125"><span class="linenos">125</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--random&quot;</span>
+</span><span id="Proton-126"><a href="#Proton-126"><span class="linenos">126</span></a>        <span class="k">elif</span> <span class="n">secure_core</span><span class="p">:</span>
+</span><span id="Proton-127"><a href="#Proton-127"><span class="linenos">127</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--sc&quot;</span>
+</span><span id="Proton-128"><a href="#Proton-128"><span class="linenos">128</span></a>        <span class="k">elif</span> <span class="n">p2p</span><span class="p">:</span>
+</span><span id="Proton-129"><a href="#Proton-129"><span class="linenos">129</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--p2p&quot;</span>
+</span><span id="Proton-130"><a href="#Proton-130"><span class="linenos">130</span></a>        <span class="k">elif</span> <span class="n">tor</span><span class="p">:</span>
+</span><span id="Proton-131"><a href="#Proton-131"><span class="linenos">131</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--tor&quot;</span>
+</span><span id="Proton-132"><a href="#Proton-132"><span class="linenos">132</span></a>        <span class="k">if</span> <span class="n">country_code</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">server</span><span class="p">):</span>
+</span><span id="Proton-133"><a href="#Proton-133"><span class="linenos">133</span></a>            <span class="n">args</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; --cc </span><span class="si">{</span><span class="n">country_code</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="Proton-134"><a href="#Proton-134"><span class="linenos">134</span></a>        <span class="k">if</span> <span class="n">protocol</span><span class="p">:</span>
+</span><span id="Proton-135"><a href="#Proton-135"><span class="linenos">135</span></a>            <span class="n">args</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; --protocol </span><span class="si">{</span><span class="n">protocol</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="Proton-136"><a href="#Proton-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;connect </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Proton-137"><a href="#Proton-137"><span class="linenos">137</span></a>
+</span><span id="Proton-138"><a href="#Proton-138"><span class="linenos">138</span></a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-139"><a href="#Proton-139"><span class="linenos">139</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;disconnect&quot;</span><span class="p">)</span>
+</span><span id="Proton-140"><a href="#Proton-140"><span class="linenos">140</span></a>
+</span><span id="Proton-141"><a href="#Proton-141"><span class="linenos">141</span></a>    <span class="k">def</span> <span class="nf">killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-142"><a href="#Proton-142"><span class="linenos">142</span></a>        <span class="sd">&quot;&quot;&quot;`arg` should be one of `on`, `off`, or `permanent`.&quot;&quot;&quot;</span>
+</span><span id="Proton-143"><a href="#Proton-143"><span class="linenos">143</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;killswitch --</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Proton-144"><a href="#Proton-144"><span class="linenos">144</span></a>
+</span><span id="Proton-145"><a href="#Proton-145"><span class="linenos">145</span></a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-146"><a href="#Proton-146"><span class="linenos">146</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;login </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Proton-147"><a href="#Proton-147"><span class="linenos">147</span></a>
+</span><span id="Proton-148"><a href="#Proton-148"><span class="linenos">148</span></a>    <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-149"><a href="#Proton-149"><span class="linenos">149</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;logout&quot;</span><span class="p">)</span>
+</span><span id="Proton-150"><a href="#Proton-150"><span class="linenos">150</span></a>
+</span><span id="Proton-151"><a href="#Proton-151"><span class="linenos">151</span></a>    <span class="k">def</span> <span class="nf">netshield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-152"><a href="#Proton-152"><span class="linenos">152</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;netshield </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="Proton-153"><a href="#Proton-153"><span class="linenos">153</span></a>
+</span><span id="Proton-154"><a href="#Proton-154"><span class="linenos">154</span></a>    <span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-155"><a href="#Proton-155"><span class="linenos">155</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;reconnect&quot;</span><span class="p">)</span>
+</span><span id="Proton-156"><a href="#Proton-156"><span class="linenos">156</span></a>
+</span><span id="Proton-157"><a href="#Proton-157"><span class="linenos">157</span></a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-158"><a href="#Proton-158"><span class="linenos">158</span></a>        <span class="sd">&quot;&quot;&quot;Execute status command.&quot;&quot;&quot;</span>
+</span><span id="Proton-159"><a href="#Proton-159"><span class="linenos">159</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
+</span><span id="Proton-160"><a href="#Proton-160"><span class="linenos">160</span></a>
+</span><span id="Proton-161"><a href="#Proton-161"><span class="linenos">161</span></a>    <span class="c1"># Seat |=========================== Convenience ===========================|</span>
+</span><span id="Proton-162"><a href="#Proton-162"><span class="linenos">162</span></a>
+</span><span id="Proton-163"><a href="#Proton-163"><span class="linenos">163</span></a>    <span class="nd">@property</span>
+</span><span id="Proton-164"><a href="#Proton-164"><span class="linenos">164</span></a>    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Proton-165"><a href="#Proton-165"><span class="linenos">165</span></a>        <span class="sd">&quot;&quot;&quot;Returns whether this device is connected to Proton.&quot;&quot;&quot;</span>
+</span><span id="Proton-166"><a href="#Proton-166"><span class="linenos">166</span></a>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">capturing_output</span><span class="p">():</span>
+</span><span id="Proton-167"><a href="#Proton-167"><span class="linenos">167</span></a>            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">()</span><span class="o">.</span><span class="n">stdout</span>
+</span><span id="Proton-168"><a href="#Proton-168"><span class="linenos">168</span></a>        <span class="k">return</span> <span class="s2">&quot;Proton VPN Connection Status&quot;</span> <span class="ow">in</span> <span class="n">status</span>
+</span><span id="Proton-169"><a href="#Proton-169"><span class="linenos">169</span></a>
+</span><span id="Proton-170"><a href="#Proton-170"><span class="linenos">170</span></a>    <span class="nd">@property</span>
+</span><span id="Proton-171"><a href="#Proton-171"><span class="linenos">171</span></a>    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Connection</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Proton-172"><a href="#Proton-172"><span class="linenos">172</span></a>        <span class="sd">&quot;&quot;&quot;If this device is connected, a `Connection` object will be returned.</span>
+</span><span id="Proton-173"><a href="#Proton-173"><span class="linenos">173</span></a><span class="sd">        If disconnected, `None` will be returned.</span>
+</span><span id="Proton-174"><a href="#Proton-174"><span class="linenos">174</span></a>
+</span><span id="Proton-175"><a href="#Proton-175"><span class="linenos">175</span></a><span class="sd">        Accessing this property can be time consuming due to the protonvpn-cli backend.</span>
+</span><span id="Proton-176"><a href="#Proton-176"><span class="linenos">176</span></a><span class="sd">        Ideally store it in a local variable until you need to check for an updated connection status.</span>
+</span><span id="Proton-177"><a href="#Proton-177"><span class="linenos">177</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Proton-178"><a href="#Proton-178"><span class="linenos">178</span></a>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">capturing_output</span><span class="p">():</span>
+</span><span id="Proton-179"><a href="#Proton-179"><span class="linenos">179</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+</span><span id="Proton-180"><a href="#Proton-180"><span class="linenos">180</span></a>                <span class="k">return</span> <span class="n">Connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">()</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</span><span id="Proton-181"><a href="#Proton-181"><span class="linenos">181</span></a>            <span class="k">return</span> <span class="kc">None</span>
+</span><span id="Proton-182"><a href="#Proton-182"><span class="linenos">182</span></a>
+</span><span id="Proton-183"><a href="#Proton-183"><span class="linenos">183</span></a>    <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Proton-184"><a href="#Proton-184"><span class="linenos">184</span></a>        <span class="sd">&quot;&quot;&quot;Clears files from `home/.cache/protonvpn`.</span>
+</span><span id="Proton-185"><a href="#Proton-185"><span class="linenos">185</span></a>
+</span><span id="Proton-186"><a href="#Proton-186"><span class="linenos">186</span></a><span class="sd">        This seems to help with the time taken to connect sometimes,</span>
+</span><span id="Proton-187"><a href="#Proton-187"><span class="linenos">187</span></a><span class="sd">        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error.</span>
+</span><span id="Proton-188"><a href="#Proton-188"><span class="linenos">188</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Proton-189"><a href="#Proton-189"><span class="linenos">189</span></a>        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.cache&quot;</span> <span class="o">/</span> <span class="s2">&quot;protonvpn&quot;</span>
+</span><span id="Proton-190"><a href="#Proton-190"><span class="linenos">190</span></a>        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="Proton-191"><a href="#Proton-191"><span class="linenos">191</span></a>            <span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.*&quot;</span><span class="p">)]</span>
+</span><span id="Proton-192"><a href="#Proton-192"><span class="linenos">192</span></a>
+</span><span id="Proton-193"><a href="#Proton-193"><span class="linenos">193</span></a>    <span class="k">def</span> <span class="nf">connect_fastest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-194"><a href="#Proton-194"><span class="linenos">194</span></a>        <span class="sd">&quot;&quot;&quot;Connect to the fastest server.&quot;&quot;&quot;</span>
+</span><span id="Proton-195"><a href="#Proton-195"><span class="linenos">195</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">fastest</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="Proton-196"><a href="#Proton-196"><span class="linenos">196</span></a>
+</span><span id="Proton-197"><a href="#Proton-197"><span class="linenos">197</span></a>    <span class="k">def</span> <span class="nf">connect_random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-198"><a href="#Proton-198"><span class="linenos">198</span></a>        <span class="sd">&quot;&quot;&quot;Connect to a random server.&quot;&quot;&quot;</span>
+</span><span id="Proton-199"><a href="#Proton-199"><span class="linenos">199</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">random</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="Proton-200"><a href="#Proton-200"><span class="linenos">200</span></a>
+</span><span id="Proton-201"><a href="#Proton-201"><span class="linenos">201</span></a>    <span class="k">def</span> <span class="nf">disable_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-202"><a href="#Proton-202"><span class="linenos">202</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+</span><span id="Proton-203"><a href="#Proton-203"><span class="linenos">203</span></a>
+</span><span id="Proton-204"><a href="#Proton-204"><span class="linenos">204</span></a>    <span class="k">def</span> <span class="nf">enable_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-205"><a href="#Proton-205"><span class="linenos">205</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
+</span><span id="Proton-206"><a href="#Proton-206"><span class="linenos">206</span></a>
+</span><span id="Proton-207"><a href="#Proton-207"><span class="linenos">207</span></a>    <span class="k">def</span> <span class="nf">enable_permanent_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton-208"><a href="#Proton-208"><span class="linenos">208</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;permanent&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Base class for creating python bindings for cli programs.</p>
+
+<p>At a minimum, any subclass must implement a <code><a href="#Proton.program">program</a></code> property that returns the name used to invoke the cli.</p>
+
+<p>The <code><a href="#Proton.run">run</a></code> function can then be used to build bindings.</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Pip</span><span class="p">(</span><span class="n">Morbin</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nd">@property</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">return</span> <span class="s1">&#39;pip&#39;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Output</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Output</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="s2">&quot;--upgrade&quot;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">def</span> <span class="nf">install_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Output</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;requirements.txt&quot;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span> <span class="o">=</span> <span class="n">Pip</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pip</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="s2">&quot;morbin&quot;</span><span class="p">)</span>
+</code></pre>
+</div>
+</div>
+
+
+                            <div id="Proton.program" class="classattr">
+                                <div class="attr variable">
+            <span class="name">program</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Proton.program"></a>
+    
+            <div class="docstring"><p>The name used to invoke the program from the command line.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.config" class="classattr">
+                                        <input id="Proton.config-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">config</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.config-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.config"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.config-81"><a href="#Proton.config-81"><span class="linenos">81</span></a>    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.config-82"><a href="#Proton.config-82"><span class="linenos">82</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;config </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.connect" class="classattr">
+                                        <input id="Proton.connect-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">connect</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">fastest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">random</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">secure_core</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">p2p</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="n">tor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.connect-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.connect"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.connect-84"><a href="#Proton.connect-84"><span class="linenos"> 84</span></a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span>
+</span><span id="Proton.connect-85"><a href="#Proton.connect-85"><span class="linenos"> 85</span></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="Proton.connect-86"><a href="#Proton.connect-86"><span class="linenos"> 86</span></a>        <span class="n">server</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton.connect-87"><a href="#Proton.connect-87"><span class="linenos"> 87</span></a>        <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton.connect-88"><a href="#Proton.connect-88"><span class="linenos"> 88</span></a>        <span class="n">country_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="Proton.connect-89"><a href="#Proton.connect-89"><span class="linenos"> 89</span></a>        <span class="n">fastest</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton.connect-90"><a href="#Proton.connect-90"><span class="linenos"> 90</span></a>        <span class="n">random</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton.connect-91"><a href="#Proton.connect-91"><span class="linenos"> 91</span></a>        <span class="n">secure_core</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton.connect-92"><a href="#Proton.connect-92"><span class="linenos"> 92</span></a>        <span class="n">p2p</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton.connect-93"><a href="#Proton.connect-93"><span class="linenos"> 93</span></a>        <span class="n">tor</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="Proton.connect-94"><a href="#Proton.connect-94"><span class="linenos"> 94</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.connect-95"><a href="#Proton.connect-95"><span class="linenos"> 95</span></a>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span id="Proton.connect-96"><a href="#Proton.connect-96"><span class="linenos"> 96</span></a><span class="sd">        #### :params:</span>
+</span><span id="Proton.connect-97"><a href="#Proton.connect-97"><span class="linenos"> 97</span></a>
+</span><span id="Proton.connect-98"><a href="#Proton.connect-98"><span class="linenos"> 98</span></a><span class="sd">        `server`: Connect to this specific server (e.g. `CH#4`, `CH-US-1`, `HK5-Tor`).</span>
+</span><span id="Proton.connect-99"><a href="#Proton.connect-99"><span class="linenos"> 99</span></a>
+</span><span id="Proton.connect-100"><a href="#Proton.connect-100"><span class="linenos">100</span></a><span class="sd">        `protocol`: Connect using this protocol (`tcp` or `udp`).</span>
+</span><span id="Proton.connect-101"><a href="#Proton.connect-101"><span class="linenos">101</span></a>
+</span><span id="Proton.connect-102"><a href="#Proton.connect-102"><span class="linenos">102</span></a><span class="sd">        `country_code`: Connect to a server in this country (`SE`, `PT`, `BR`, `AR`, etc.).</span>
+</span><span id="Proton.connect-103"><a href="#Proton.connect-103"><span class="linenos">103</span></a>
+</span><span id="Proton.connect-104"><a href="#Proton.connect-104"><span class="linenos">104</span></a><span class="sd">        `fastest`: Connect to the fastest server.</span>
+</span><span id="Proton.connect-105"><a href="#Proton.connect-105"><span class="linenos">105</span></a>
+</span><span id="Proton.connect-106"><a href="#Proton.connect-106"><span class="linenos">106</span></a><span class="sd">        `random`: Connect to a random server.</span>
+</span><span id="Proton.connect-107"><a href="#Proton.connect-107"><span class="linenos">107</span></a>
+</span><span id="Proton.connect-108"><a href="#Proton.connect-108"><span class="linenos">108</span></a><span class="sd">        `secure_core`: Connect to the fastest Secure-Core server.</span>
+</span><span id="Proton.connect-109"><a href="#Proton.connect-109"><span class="linenos">109</span></a>
+</span><span id="Proton.connect-110"><a href="#Proton.connect-110"><span class="linenos">110</span></a><span class="sd">        `p2p`: Connect to the fastest P2P server.</span>
+</span><span id="Proton.connect-111"><a href="#Proton.connect-111"><span class="linenos">111</span></a>
+</span><span id="Proton.connect-112"><a href="#Proton.connect-112"><span class="linenos">112</span></a><span class="sd">        `tor`: Connect to the fastest Tor server.</span>
+</span><span id="Proton.connect-113"><a href="#Proton.connect-113"><span class="linenos">113</span></a>
+</span><span id="Proton.connect-114"><a href="#Proton.connect-114"><span class="linenos">114</span></a><span class="sd">        Supplying an argument for `server` will override other parameters except `protocol`.</span>
+</span><span id="Proton.connect-115"><a href="#Proton.connect-115"><span class="linenos">115</span></a>
+</span><span id="Proton.connect-116"><a href="#Proton.connect-116"><span class="linenos">116</span></a><span class="sd">        If supplying one of the `bool` params (`fastest`, `random`, `secure_core`, `p2p`, `tor`), supply only one.</span>
+</span><span id="Proton.connect-117"><a href="#Proton.connect-117"><span class="linenos">117</span></a><span class="sd">        They will be checked in the order they appear in the function signature and the first that is `True` will be used.</span>
+</span><span id="Proton.connect-118"><a href="#Proton.connect-118"><span class="linenos">118</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Proton.connect-119"><a href="#Proton.connect-119"><span class="linenos">119</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="Proton.connect-120"><a href="#Proton.connect-120"><span class="linenos">120</span></a>        <span class="k">if</span> <span class="n">server</span><span class="p">:</span>
+</span><span id="Proton.connect-121"><a href="#Proton.connect-121"><span class="linenos">121</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="n">server</span>
+</span><span id="Proton.connect-122"><a href="#Proton.connect-122"><span class="linenos">122</span></a>        <span class="k">elif</span> <span class="n">fastest</span><span class="p">:</span>
+</span><span id="Proton.connect-123"><a href="#Proton.connect-123"><span class="linenos">123</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--fastest&quot;</span>
+</span><span id="Proton.connect-124"><a href="#Proton.connect-124"><span class="linenos">124</span></a>        <span class="k">elif</span> <span class="n">random</span><span class="p">:</span>
+</span><span id="Proton.connect-125"><a href="#Proton.connect-125"><span class="linenos">125</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--random&quot;</span>
+</span><span id="Proton.connect-126"><a href="#Proton.connect-126"><span class="linenos">126</span></a>        <span class="k">elif</span> <span class="n">secure_core</span><span class="p">:</span>
+</span><span id="Proton.connect-127"><a href="#Proton.connect-127"><span class="linenos">127</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--sc&quot;</span>
+</span><span id="Proton.connect-128"><a href="#Proton.connect-128"><span class="linenos">128</span></a>        <span class="k">elif</span> <span class="n">p2p</span><span class="p">:</span>
+</span><span id="Proton.connect-129"><a href="#Proton.connect-129"><span class="linenos">129</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--p2p&quot;</span>
+</span><span id="Proton.connect-130"><a href="#Proton.connect-130"><span class="linenos">130</span></a>        <span class="k">elif</span> <span class="n">tor</span><span class="p">:</span>
+</span><span id="Proton.connect-131"><a href="#Proton.connect-131"><span class="linenos">131</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="s2">&quot;--tor&quot;</span>
+</span><span id="Proton.connect-132"><a href="#Proton.connect-132"><span class="linenos">132</span></a>        <span class="k">if</span> <span class="n">country_code</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">server</span><span class="p">):</span>
+</span><span id="Proton.connect-133"><a href="#Proton.connect-133"><span class="linenos">133</span></a>            <span class="n">args</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; --cc </span><span class="si">{</span><span class="n">country_code</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="Proton.connect-134"><a href="#Proton.connect-134"><span class="linenos">134</span></a>        <span class="k">if</span> <span class="n">protocol</span><span class="p">:</span>
+</span><span id="Proton.connect-135"><a href="#Proton.connect-135"><span class="linenos">135</span></a>            <span class="n">args</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; --protocol </span><span class="si">{</span><span class="n">protocol</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="Proton.connect-136"><a href="#Proton.connect-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;connect </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><h4 id="params">:params:</h4>
+
+<p><code>server</code>: Connect to this specific server (e.g. <code>CH#4</code>, <code>CH-US-1</code>, <code>HK5-Tor</code>).</p>
+
+<p><code>protocol</code>: Connect using this protocol (<code>tcp</code> or <code>udp</code>).</p>
+
+<p><code>country_code</code>: Connect to a server in this country (<code>SE</code>, <code>PT</code>, <code>BR</code>, <code>AR</code>, etc.).</p>
+
+<p><code>fastest</code>: Connect to the fastest server.</p>
+
+<p><code>random</code>: Connect to a random server.</p>
+
+<p><code>secure_core</code>: Connect to the fastest Secure-Core server.</p>
+
+<p><code>p2p</code>: Connect to the fastest P2P server.</p>
+
+<p><code>tor</code>: Connect to the fastest Tor server.</p>
+
+<p>Supplying an argument for <code>server</code> will override other parameters except <code>protocol</code>.</p>
+
+<p>If supplying one of the <code>bool</code> params (<code>fastest</code>, <code>random</code>, <code>secure_core</code>, <code>p2p</code>, <code>tor</code>), supply only one.
+They will be checked in the order they appear in the function signature and the first that is <code>True</code> will be used.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.disconnect" class="classattr">
+                                        <input id="Proton.disconnect-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">disconnect</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.disconnect-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.disconnect"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.disconnect-138"><a href="#Proton.disconnect-138"><span class="linenos">138</span></a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.disconnect-139"><a href="#Proton.disconnect-139"><span class="linenos">139</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;disconnect&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.killswitch" class="classattr">
+                                        <input id="Proton.killswitch-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">killswitch</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">arg</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.killswitch-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.killswitch"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.killswitch-141"><a href="#Proton.killswitch-141"><span class="linenos">141</span></a>    <span class="k">def</span> <span class="nf">killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.killswitch-142"><a href="#Proton.killswitch-142"><span class="linenos">142</span></a>        <span class="sd">&quot;&quot;&quot;`arg` should be one of `on`, `off`, or `permanent`.&quot;&quot;&quot;</span>
+</span><span id="Proton.killswitch-143"><a href="#Proton.killswitch-143"><span class="linenos">143</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;killswitch --</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p><code>arg</code> should be one of <code>on</code>, <code>off</code>, or <code>permanent</code>.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.login" class="classattr">
+                                        <input id="Proton.login-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">login</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">username</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.login-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.login"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.login-145"><a href="#Proton.login-145"><span class="linenos">145</span></a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.login-146"><a href="#Proton.login-146"><span class="linenos">146</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;login </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.logout" class="classattr">
+                                        <input id="Proton.logout-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">logout</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.logout-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.logout"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.logout-148"><a href="#Proton.logout-148"><span class="linenos">148</span></a>    <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.logout-149"><a href="#Proton.logout-149"><span class="linenos">149</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;logout&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.netshield" class="classattr">
+                                        <input id="Proton.netshield-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">netshield</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.netshield-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.netshield"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.netshield-151"><a href="#Proton.netshield-151"><span class="linenos">151</span></a>    <span class="k">def</span> <span class="nf">netshield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.netshield-152"><a href="#Proton.netshield-152"><span class="linenos">152</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;netshield </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.reconnect" class="classattr">
+                                        <input id="Proton.reconnect-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">reconnect</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.reconnect-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.reconnect"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.reconnect-154"><a href="#Proton.reconnect-154"><span class="linenos">154</span></a>    <span class="k">def</span> <span class="nf">reconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.reconnect-155"><a href="#Proton.reconnect-155"><span class="linenos">155</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;reconnect&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.status" class="classattr">
+                                        <input id="Proton.status-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">status</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.status-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.status"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.status-157"><a href="#Proton.status-157"><span class="linenos">157</span></a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.status-158"><a href="#Proton.status-158"><span class="linenos">158</span></a>        <span class="sd">&quot;&quot;&quot;Execute status command.&quot;&quot;&quot;</span>
+</span><span id="Proton.status-159"><a href="#Proton.status-159"><span class="linenos">159</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Execute status command.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.connected" class="classattr">
+                                <div class="attr variable">
+            <span class="name">connected</span><span class="annotation">: bool</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Proton.connected"></a>
+    
+            <div class="docstring"><p>Returns whether this device is connected to Proton.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.connection" class="classattr">
+                                <div class="attr variable">
+            <span class="name">connection</span><span class="annotation">: protonne.proton.Connection | None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Proton.connection"></a>
+    
+            <div class="docstring"><p>If this device is connected, a <code>Connection</code> object will be returned.
+If disconnected, <code>None</code> will be returned.</p>
+
+<p>Accessing this property can be time consuming due to the protonvpn-cli backend.
+Ideally store it in a local variable until you need to check for an updated connection status.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.clear_cache" class="classattr">
+                                        <input id="Proton.clear_cache-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">clear_cache</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="Proton.clear_cache-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.clear_cache"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.clear_cache-183"><a href="#Proton.clear_cache-183"><span class="linenos">183</span></a>    <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Proton.clear_cache-184"><a href="#Proton.clear_cache-184"><span class="linenos">184</span></a>        <span class="sd">&quot;&quot;&quot;Clears files from `home/.cache/protonvpn`.</span>
+</span><span id="Proton.clear_cache-185"><a href="#Proton.clear_cache-185"><span class="linenos">185</span></a>
+</span><span id="Proton.clear_cache-186"><a href="#Proton.clear_cache-186"><span class="linenos">186</span></a><span class="sd">        This seems to help with the time taken to connect sometimes,</span>
+</span><span id="Proton.clear_cache-187"><a href="#Proton.clear_cache-187"><span class="linenos">187</span></a><span class="sd">        but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error.</span>
+</span><span id="Proton.clear_cache-188"><a href="#Proton.clear_cache-188"><span class="linenos">188</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Proton.clear_cache-189"><a href="#Proton.clear_cache-189"><span class="linenos">189</span></a>        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.cache&quot;</span> <span class="o">/</span> <span class="s2">&quot;protonvpn&quot;</span>
+</span><span id="Proton.clear_cache-190"><a href="#Proton.clear_cache-190"><span class="linenos">190</span></a>        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="Proton.clear_cache-191"><a href="#Proton.clear_cache-191"><span class="linenos">191</span></a>            <span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.*&quot;</span><span class="p">)]</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Clears files from <code>home/.cache/protonvpn</code>.</p>
+
+<p>This seems to help with the time taken to connect sometimes,
+but if the permanent kill switch is engaged and you try to connect after clearing the cache, you will get an error.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.connect_fastest" class="classattr">
+                                        <input id="Proton.connect_fastest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">connect_fastest</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.connect_fastest-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.connect_fastest"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.connect_fastest-193"><a href="#Proton.connect_fastest-193"><span class="linenos">193</span></a>    <span class="k">def</span> <span class="nf">connect_fastest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.connect_fastest-194"><a href="#Proton.connect_fastest-194"><span class="linenos">194</span></a>        <span class="sd">&quot;&quot;&quot;Connect to the fastest server.&quot;&quot;&quot;</span>
+</span><span id="Proton.connect_fastest-195"><a href="#Proton.connect_fastest-195"><span class="linenos">195</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">fastest</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Connect to the fastest server.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.connect_random" class="classattr">
+                                        <input id="Proton.connect_random-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">connect_random</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.connect_random-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.connect_random"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.connect_random-197"><a href="#Proton.connect_random-197"><span class="linenos">197</span></a>    <span class="k">def</span> <span class="nf">connect_random</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.connect_random-198"><a href="#Proton.connect_random-198"><span class="linenos">198</span></a>        <span class="sd">&quot;&quot;&quot;Connect to a random server.&quot;&quot;&quot;</span>
+</span><span id="Proton.connect_random-199"><a href="#Proton.connect_random-199"><span class="linenos">199</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">random</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Connect to a random server.</p>
+</div>
+
+
+                            </div>
+                            <div id="Proton.disable_killswitch" class="classattr">
+                                        <input id="Proton.disable_killswitch-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">disable_killswitch</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.disable_killswitch-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.disable_killswitch"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.disable_killswitch-201"><a href="#Proton.disable_killswitch-201"><span class="linenos">201</span></a>    <span class="k">def</span> <span class="nf">disable_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.disable_killswitch-202"><a href="#Proton.disable_killswitch-202"><span class="linenos">202</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.enable_killswitch" class="classattr">
+                                        <input id="Proton.enable_killswitch-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">enable_killswitch</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.enable_killswitch-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.enable_killswitch"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.enable_killswitch-204"><a href="#Proton.enable_killswitch-204"><span class="linenos">204</span></a>    <span class="k">def</span> <span class="nf">enable_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.enable_killswitch-205"><a href="#Proton.enable_killswitch-205"><span class="linenos">205</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="Proton.enable_permanent_killswitch" class="classattr">
+                                        <input id="Proton.enable_permanent_killswitch-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">enable_permanent_killswitch</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="n">morbin</span><span class="o">.</span><span class="n">morbin</span><span class="o">.</span><span class="n">Output</span>:</span></span>
+
+                <label class="view-source-button" for="Proton.enable_permanent_killswitch-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#Proton.enable_permanent_killswitch"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Proton.enable_permanent_killswitch-207"><a href="#Proton.enable_permanent_killswitch-207"><span class="linenos">207</span></a>    <span class="k">def</span> <span class="nf">enable_permanent_killswitch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Output</span><span class="p">:</span>
+</span><span id="Proton.enable_permanent_killswitch-208"><a href="#Proton.enable_permanent_killswitch-208"><span class="linenos">208</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">killswitch</span><span class="p">(</span><span class="s2">&quot;permanent&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>morbin.morbin.Morbin</dt>
+                                <dd id="Proton.__init__" class="function">Morbin</dd>
+                <dd id="Proton.capture_output" class="variable">capture_output</dd>
+                <dd id="Proton.shell" class="variable">shell</dd>
+                <dd id="Proton.capturing_output" class="function">capturing_output</dd>
+                <dd id="Proton.run" class="function">run</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
     </main>
-<script>
-    function escapeHTML(html) {
-        return document.createElement('div').appendChild(document.createTextNode(html)).parentNode.innerHTML;
-    }
-
-    const originalContent = document.querySelector("main.pdoc");
-    let currentContent = originalContent;
-
-    function setContent(innerHTML) {
-        let elem;
-        if (innerHTML) {
-            elem = document.createElement("main");
-            elem.classList.add("pdoc");
-            elem.innerHTML = innerHTML;
-        } else {
-            elem = originalContent;
-        }
-        if (currentContent !== elem) {
-            currentContent.replaceWith(elem);
-            currentContent = elem;
-        }
-    }
-
-    function getSearchTerm() {
-        return (new URL(window.location)).searchParams.get("search");
-    }
-
-    const searchBox = document.querySelector(".pdoc input[type=search]");
-    searchBox.addEventListener("input", function () {
-        let url = new URL(window.location);
-        if (searchBox.value.trim()) {
-            url.hash = "";
-            url.searchParams.set("search", searchBox.value);
-        } else {
-            url.searchParams.delete("search");
-        }
-        history.replaceState("", "", url.toString());
-        onInput();
-    });
-    window.addEventListener("popstate", onInput);
-
-
-    let search, searchErr;
-
-    async function initialize() {
-        try {
-            search = await new Promise((resolve, reject) => {
-                const script = document.createElement("script");
-                script.type = "text/javascript";
-                script.async = true;
-                script.onload = () => resolve(window.pdocSearch);
-                script.onerror = (e) => reject(e);
-                script.src = "search.js";
-                document.getElementsByTagName("head")[0].appendChild(script);
-            });
-        } catch (e) {
-            console.error("Cannot fetch pdoc search index");
-            searchErr = "Cannot fetch search index.";
-        }
-        onInput();
-
-        document.querySelector("nav.pdoc").addEventListener("click", e => {
-            if (e.target.hash) {
-                searchBox.value = "";
-                searchBox.dispatchEvent(new Event("input"));
-            }
-        });
-    }
-
-    function onInput() {
-        setContent((() => {
-            const term = getSearchTerm();
-            if (!term) {
-                return null
-            }
-            if (searchErr) {
-                return `<h3>Error: ${searchErr}</h3>`
-            }
-            if (!search) {
-                return "<h3>Searching...</h3>"
-            }
-
-            window.scrollTo({top: 0, left: 0, behavior: 'auto'});
-
-            const results = search(term);
-
-            let html;
-            if (results.length === 0) {
-                html = `No search results for '${escapeHTML(term)}'.`
-            } else {
-                html = `<h4>${results.length} search result${results.length > 1 ? "s" : ""} for '${escapeHTML(term)}'.</h4>`;
-            }
-            for (let result of results.slice(0, 10)) {
-                let doc = result.doc;
-                let url = `${doc.modulename.replaceAll(".", "/")}.html`;
-                if (doc.qualname) {
-                    url += `#${doc.qualname}`;
-                }
-
-                let heading;
-                switch (result.doc.kind) {
-                    case "function":
-                        if (doc.fullname.endsWith(".__init__")) {
-                            heading = `<span class="name">${doc.fullname.replace(/\.__init__$/, "")}</span>${doc.signature}`;
-                        } else {
-                            heading = `<span class="def">${doc.funcdef}</span> <span class="name">${doc.fullname}</span>${doc.signature}`;
-                        }
-                        break;
-                    case "class":
-                        heading = `<span class="def">class</span> <span class="name">${doc.fullname}</span>`;
-                        if (doc.bases)
-                            heading += `<wbr>(<span class="base">${doc.bases}</span>)`;
-                        heading += `:`;
-                        break;
-                    case "variable":
-                        heading = `<span class="name">${doc.fullname}</span>`;
-                        if (doc.annotation)
-                            heading += `<span class="annotation">${doc.annotation}</span>`;
-                        if (doc.default_value)
-                            heading += `<span class="default_value">${doc.default_value}</span>`;
-                        break;
-                    default:
-                        heading = `<span class="name">${doc.fullname}</span>`;
-                        break;
-                }
-                html += `
-                        <section class="search-result">
-                        <a href="${url}" class="attr ${doc.kind}">${heading}</a>
-                        <div class="docstring">${doc.doc}</div>
-                        </section>
-                    `;
-
-            }
-            return html;
-        })());
-    }
-
-    if (getSearchTerm()) {
-        initialize();
-        searchBox.value = getSearchTerm();
-        onInput();
-    } else {
-        searchBox.addEventListener("focus", initialize, {once: true});
-    }
-
-    searchBox.addEventListener("keydown", e => {
-        if (["ArrowDown", "ArrowUp", "Enter"].includes(e.key)) {
-            let focused = currentContent.querySelector(".search-result.focused");
-            if (!focused) {
-                currentContent.querySelector(".search-result").classList.add("focused");
-            } else if (
-                e.key === "ArrowDown"
-                && focused.nextElementSibling
-                && focused.nextElementSibling.classList.contains("search-result")
-            ) {
-                focused.classList.remove("focused");
-                focused.nextElementSibling.classList.add("focused");
-                focused.nextElementSibling.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest",
-                    inline: "nearest"
-                });
-            } else if (
-                e.key === "ArrowUp"
-                && focused.previousElementSibling
-                && focused.previousElementSibling.classList.contains("search-result")
-            ) {
-                focused.classList.remove("focused");
-                focused.previousElementSibling.classList.add("focused");
-                focused.previousElementSibling.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest",
-                    inline: "nearest"
-                });
-            } else if (
-                e.key === "Enter"
-            ) {
-                focused.querySelector("a").click();
-            }
-        }
-    });
-</script></body>
+</body>
 </html>
